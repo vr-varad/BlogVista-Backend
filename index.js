@@ -10,6 +10,9 @@ const fs = require('fs')
 
 const User = require('./models/User')
 const Post = require('./models/Post')
+const Subscriber = require('./models/Subscriber')
+
+const sendEmail = require('./mailingService')
 
 const app = express()
 const saltRounds = 10;
@@ -106,6 +109,10 @@ app.post('/post',uploadMiddleware.single('file'),async(req,res)=>{
         cover : newPath,
         author : info.id
     })
+    const emails = await Subscriber.find()
+    emails.forEach(email=>{
+        sendEmail(email.email,'post',postDoc)
+    })
     res.json({postDoc})
 
    })
@@ -156,6 +163,24 @@ app.put('/post/:id',uploadMiddleware.single('file'),(req,res)=>{
    })
 }
 )
+
+app.post('/subscribe',async (req,res)=>{
+    try {
+        const email = req.body.reqEmail
+        await Subscriber.create({email})
+        await sendEmail(email,'new')        
+        res.json({
+            msg:'Success',
+            email
+    })
+    } catch (error) {
+        res.json({
+            msg:'Failure',
+            error
+        })
+    }
+})
+
 const start = async()=>{
     try {
         await connectDB()
