@@ -44,8 +44,8 @@ const connectDB= async()=>{
 //registration
 app.post('/register',async(req,res)=>{
     try {
-        const {username,password} = req.body
-    const userDoc = await User.create({username,password:bcrypt.hashSync(password,saltRounds)})
+        const {username,password,randNum} = req.body
+    const userDoc = await User.create({username,password:bcrypt.hashSync(password,saltRounds),randNum})
     res.json({
         userDoc
     })
@@ -180,6 +180,19 @@ app.post('/subscribe',async (req,res)=>{
         })
     }
 })
+
+
+app.get('/posts',async(req,res)=>{
+    res.json(await Post.find().populate('author',['username']))
+
+})
+app.get('/userProfile/:id',async(req,res)=>{
+    const id = req.params.id
+    const user = await User.findById(id)
+    res.json({user})
+
+})
+
 
 const start = async()=>{
     try {
