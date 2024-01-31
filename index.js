@@ -20,9 +20,12 @@ const secret = "eefvqwrvqw"
 const uploadMiddleware = multer({ dest: 'uploads/' })
 
 app.use(cors({
+    origin: 'https://myblogvista.vercel.app',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
-    origin: 'https://myblogvista.vercel.app'
-}))
+    optionsSuccessStatus: 204, // Some legacy browsers (IE11, various SmartTVs) choke on 204
+    allowedHeaders: 'Content-Type,Authorization',
+  }));
 app.use(express.json())
 app.use(cookieParser())
 app.use('/uploads',express.static(__dirname + '/uploads'))
