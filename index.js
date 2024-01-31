@@ -21,7 +21,7 @@ const uploadMiddleware = multer({ dest: 'uploads/' })
 
 app.use(cors({
     credentials: true,
-    origin: 'http://localhost:3000'
+    origin: 'https://blogvista-pl9x.onrender.com'
 }))
 app.use(express.json())
 app.use(cookieParser())
