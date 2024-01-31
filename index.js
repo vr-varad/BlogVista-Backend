@@ -93,6 +93,9 @@ app.post('/logout',(req,res)=>{
 
 
 app.post('/post',uploadMiddleware.single('file'),async(req,res)=>{
+    res.removeHeader('Access-Control-Allow-Origin'); // Remove if set
+    res.removeHeader('Access-Control-Allow-Methods'); // Remove if set
+    res.removeHeader('Access-Control-Allow-Headers');
     const {originalname,path} = req.file
     const parts = originalname.split('.')
     const ext = parts[1]
