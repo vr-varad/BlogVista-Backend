@@ -21,7 +21,7 @@ const uploadMiddleware = multer({ dest: 'uploads/' })
 
 app.use(cors({
     credentials: true,
-    origin: 'https://blog-vista-frontend.vercel.app'
+    origin: 'https://myblogvista.vercel.app'
 }))
 app.use(express.json())
 app.use(cookieParser())
