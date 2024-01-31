@@ -23,7 +23,7 @@ app.use(cors({
     origin: 'https://myblogvista.vercel.app',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
-    allowedHeaders: '*',
+    allowedHeaders: 'Content-Type,Authorization,FormData',
   }));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
